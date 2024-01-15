@@ -6,7 +6,7 @@ import logo from "./img/pngegg.png";
 import ChatList from "./components/ChatList.js";
 import ChatForm from "./components/ChatForm.js";
 import Notification from "./img/notification.mp3";
-import "./App.css";
+import "./ChatGptBootApp.scss";
 
 function ChatGptBootApp() {
   const [chatMessages, setChatMessages] = useState([]);
@@ -19,7 +19,6 @@ function ChatGptBootApp() {
       apiKey: process.env.REACT_APP_OPENAI_API_KEY,
       dangerouslyAllowBrowser: true,
     });
-    toast.error("Something went wrong, please try again later");
   }, []);
 
   const submitHandler = async (message) => {
