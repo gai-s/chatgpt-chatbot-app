@@ -4,15 +4,19 @@ import CricketImg2 from "../img/jiminy-cricket-greenish.png";
 import PinoccioAndCricketImg from "../img/nose1.png";
 import truthGif from "../img/truth-gif.gif";
 
-const ChatList = ({ chatMessages, loading }) => {
+const ChatList = ({ chatMessages, loading, seriousEdit }) => {
   return (
     <div className="chat-container">
       <nav className="left-nav">
-        <img src={PinoccioAndCricketImg} alt="" />
-        <img src={CricketImg2} alt="" />
+        {!seriousEdit && (
+          <>
+            <img src={PinoccioAndCricketImg} alt="" />
+            <img src={CricketImg2} alt="" />
+          </>
+        )}
       </nav>
       <div className="list-items">
-        {!chatMessages.length ? (
+        {!chatMessages.length && !seriousEdit ? (
           <img className="gif-img" src={truthGif} alt="" />
         ) : (
           chatMessages.map((message, index) => (
@@ -24,7 +28,13 @@ const ChatList = ({ chatMessages, loading }) => {
             >
               <div
                 className={`list-avatar ${
-                  message.role === "user" ? "user-avatar" : "bot-avatar"
+                  message.role === "user" && seriousEdit
+                    ? "user-avatar-serious"
+                    : message.role === "user" && !seriousEdit
+                    ? "user-avatar-wink"
+                    : message.role !== "user" && seriousEdit
+                    ? "bot-avatar-serious"
+                    : "bot-avatar-wink"
                 }`}
               ></div>
               <div
@@ -47,8 +57,12 @@ const ChatList = ({ chatMessages, loading }) => {
         )}
       </div>
       <nav className="right-nav">
-        <img src={CricketImg2} alt="" />
-        <img src={PinoccioAndCricketImg} alt="" />
+        {!seriousEdit && (
+          <>
+            <img src={CricketImg2} alt="" />
+            <img src={PinoccioAndCricketImg} alt="" />
+          </>
+        )}
       </nav>
     </div>
   );

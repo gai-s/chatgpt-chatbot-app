@@ -2,7 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import OpenAI from "openai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import logo from "./img/pngegg.png";
+import gepettoLogo from "./img/pngegg.png";
+import chatGptLogo from "./img/chatGptLogo.png";
+import seriousIcon from "./img/serious.png";
+import winkIcon from "./img/wink.png";
 import ChatList from "./components/ChatList.js";
 import ChatForm from "./components/ChatForm.js";
 import Notification from "./img/notification.mp3";
@@ -11,6 +14,7 @@ import "./ChatGptBootApp.scss";
 function ChatGptBootApp() {
   const [chatMessages, setChatMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [seriousEdit, setSeriousEdit] = useState(false);
   const openai = useRef(null);
   const audioElement = new Audio(Notification);
 
@@ -53,14 +57,30 @@ function ChatGptBootApp() {
   return (
     <div className="ChatGpt-Boot-app">
       <ToastContainer />
-      <header className="App-header">
-        Geppetto - ChatGpt Bot
-        <a href="https://chat.openai.com/" target="_blank" rel="noreferrer">
-          <img src={logo} className="App-logo" alt="logo" />
-        </a>
+      <header>
+        <div className="App-header">
+          Geppetto - ChatGpt Bot
+          <a href="https://chat.openai.com/" target="_blank" rel="noreferrer">
+            <img
+              src={seriousEdit ? chatGptLogo : gepettoLogo}
+              className={`App-logo ${seriousEdit ? "serious" : "wink"}`}
+              alt="logo"
+            />
+          </a>
+        </div>
+        <button
+          className="change-look"
+          onClick={() => setSeriousEdit((prev) => !prev)}
+        >
+          <img src={!seriousEdit ? seriousIcon : winkIcon} alt="" />
+        </button>
       </header>
       <main>
-        <ChatList chatMessages={chatMessages} loading={loading} />
+        <ChatList
+          chatMessages={chatMessages}
+          loading={loading}
+          seriousEdit={seriousEdit}
+        />
         <ChatForm submitHandler={submitHandler} />
       </main>
       <div className="footer">
