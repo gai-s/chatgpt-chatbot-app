@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import OpenAI from "openai";
+import useLocalStorage from "./hooks/useLocalStorage.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import gepettoLogo from "./img/pngegg.png";
@@ -14,7 +15,10 @@ import "./ChatGptBootApp.scss";
 function ChatGptBootApp() {
   const [chatMessages, setChatMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [seriousEdit, setSeriousEdit] = useState(false);
+  const [seriousEdit, setSeriousEdit] = useLocalStorage(
+    "serious-edit-version",
+    false
+  );
   const openai = useRef(null);
   const audioElement = new Audio(Notification);
 
@@ -43,7 +47,6 @@ function ChatGptBootApp() {
       ]);
       setLoading(false);
       audioElement.play();
-      console.log(completionText);
     } catch (err) {
       console.error(err);
       setLoading(false);
