@@ -17,7 +17,7 @@ function ChatGptBootApp() {
   const [loading, setLoading] = useState(false);
   const [seriousEdit, setSeriousEdit] = useLocalStorage(
     "serious-edit-version",
-    false
+    true
   );
   const openai = useRef(null);
   const audioElement = new Audio(Notification);
